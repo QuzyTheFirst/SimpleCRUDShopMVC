@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShopMVC.Models.Client>
+﻿@model IEnumerable<ShopMVC.Models.ClientsIndexVM>
 
 @{
     ViewData["Title"] = "Clients";
@@ -25,10 +25,10 @@
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
             <th>
-                Number of orders
+                @Html.DisplayNameFor(model => model.OrdersCount)
             </th>
             <th>
-                Average order price
+                @Html.DisplayNameFor(model => model.OrdersAveragePrice)
             </th>
             <th></th>
         </tr>
@@ -50,14 +50,10 @@
                     @Html.DisplayFor(modelItem => item.Gender)
                 </td>
                 <td>
-                    @item.Orders?.Count()
+                    @Html.DisplayFor(modelItem => item.OrdersCount)
                 </td>
                 <td>
-                    @{
-                        decimal orderAveragePrice = 0;
-                        orderAveragePrice = item.Orders.Any() ? item.Orders.Average(o => o.Quantity * o.Product.Price) : 0;
-                    }
-                    @orderAveragePrice$
+                    @Html.DisplayFor(modelItem => item.OrdersAveragePrice)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

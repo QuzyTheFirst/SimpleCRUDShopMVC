@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ShopMVC.Models.Order>
+﻿@model IEnumerable<ShopMVC.Models.OrdersIndexVM>
 
 @{
     ViewData["Title"] = "Orders";
@@ -16,16 +16,16 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Client)
+                @Html.DisplayNameFor(model => model.ClientName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product)
+                @Html.DisplayNameFor(model => model.ProductTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @Html.DisplayNameFor(model => model.ProductQuantity)
             </th>
             <th>
-                Order Price
+                @Html.DisplayNameFor(model => model.OrderFullPrice)
             </th>
             <th></th>
         </tr>
@@ -38,19 +38,16 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Client.Name)
+                    @Html.DisplayFor(modelItem => item.ClientName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Product.Title)
+                    @Html.DisplayFor(modelItem => item.ProductTitle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
+                    @Html.DisplayFor(modelItem => item.ProductQuantity)
                 </td>
                 <td>
-                    @{
-                        decimal orderPrice = item.Quantity * item.Product.Price;
-                    }
-                    @orderPrice$
+                    @Html.DisplayFor(modelItem => item.OrderFullPrice)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

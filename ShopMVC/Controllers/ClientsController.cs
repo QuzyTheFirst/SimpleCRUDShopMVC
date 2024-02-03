@@ -22,13 +22,19 @@ namespace ShopMVC.Controllers
         // GET: Clients
         public async Task<IActionResult> Index()
         {
-            var clientsQuery = _context.Clients
-                .Include(c => c.Orders)
-                .ThenInclude(o => o.Product)
-                .AsNoTracking()
-                .ToListAsync();
+            var clientsQuery = from c in _context.Clients
+                          select new ClientsIndexVM
+                          {
+                              Id = c.Id,
+                              Name = c.Name,
+                              Email = c.Email,
+                              Birthdate = c.Birthdate,
+                              Gender = c.Gender,
+                              OrdersCount = c.Orders.Count(),
+                              OrdersAveragePrice = c.Orders.Any() ? c.Orders.Average(o => o.Quantity * o.Product.Price) : 0,
+                          };
 
-            return View(await clientsQuery);
+            return View(await clientsQuery.AsNoTracking().ToListAsync());
         }
 
         // GET: Clients/Details/5

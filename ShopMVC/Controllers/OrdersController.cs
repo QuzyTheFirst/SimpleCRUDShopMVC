@@ -22,8 +22,19 @@ namespace ShopMVC.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var shopContext = _context.Orders.Include(o => o.Client).Include(o => o.Product);
-            return View(await shopContext.ToListAsync());
+            //var shopContext = _context.Orders.Include(o => o.Client).Include(o => o.Product);
+            var shopContext = from o in _context.Orders
+                             select new OrdersIndexVM
+                             {
+                                 Id = o.Id,
+                                 Status = o.Status,
+                                 ClientName = o.Client.Name,
+                                 ProductTitle = o.Product.Title,
+                                 ProductQuantity = o.Quantity,
+                                 OrderFullPrice = o.Quantity * o.Product.Price,
+                             };
+
+            return View(await shopContext.AsNoTracking().ToListAsync());
         }
 
         // GET: Orders/Details/5
